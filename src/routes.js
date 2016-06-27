@@ -5,6 +5,7 @@ import {
     App,
     Chat,
     Home,
+    HomeExample,
     Widgets,
     About,
     Login,
@@ -46,6 +47,7 @@ export default (store) => {
       </Route>
 
       { /* Routes */ }
+      <Route path="home-example" component={HomeExample}/>
       <Route path="about" component={About}/>
       <Route path="login" component={Login}/>
       <Route path="survey" component={Survey}/>

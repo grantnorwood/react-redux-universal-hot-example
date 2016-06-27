@@ -43,7 +43,7 @@ export default class About extends Component {
             {showKitten ? 'No! Take it away!' : 'Yes! Please!'}</button>
         </p>
 
-        {showKitten && <div><img src={kitten}/></div>}
+        {showKitten && <div><img src={kitten} alt="kitten"/></div>}
       </div>
     );
   }

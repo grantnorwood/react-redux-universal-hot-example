@@ -1,29 +1,63 @@
-{ "extends": "eslint-config-airbnb",
+{
+  "extends": "eslint-config-airbnb",
+  "parser": "babel-eslint",
   "env": {
     "browser": true,
     "node": true,
     "mocha": true
   },
   "rules": {
-    "react/no-multi-comp": 0,
+    "arrow-body-style": 0,
+    "comma-dangle": 0,
+    // not sure why airbnb turned this on. gross!
+    "computed-property-spacing": 0,
+    "consistent-return": 0,
+    "experimentalObjectRestSpread": 0,
     "import/default": 0,
     "import/no-duplicates": 0,
     "import/named": 0,
     "import/namespace": 0,
     "import/no-unresolved": 0,
     "import/no-named-as-default": 2,
-    "comma-dangle": 0,  // not sure why airbnb turned this on. gross!
-    "indent": [2, 2, {"SwitchCase": 1}],
+    "indent": 0,
+    "global-require": 0,
+    "max-len": 0,
+    "no-alert": 0,
+    "no-case-declarations": 0,
+    "no-confusing-arrow": 0,
     "no-console": 0,
-    "no-alert": 0
+    "no-duplicate-imports": 0,
+    "no-return-assign": 0,
+    "no-trailing-spaces": 0,
+    "no-underscore-dangle": 0,
+    "no-useless-constructor": 0,
+    "object-curly-spacing": 0,
+    "object-shorthand": 0,
+    "prefer-template": 0,
+    "quotes": 0,
+    "react/jsx-boolean-value": 0,
+    "react/jsx-closing-bracket-location": 0,
+    "react/jsx-curly-spacing": 0,
+    "react/jsx-first-prop-new-line": 0,
+    "react/jsx-indent": 0,
+    "react/jsx-indent-props": 0,
+    "react/jsx-space-before-closing": 0,
+    "react/no-multi-comp": 0,
+    "react/prefer-stateless-function": 0,
+    "react/prop-types": 0,
+    "space-before-function-paren": 0
   },
   "plugins": [
-    "react", "import"
+    "react",
+    "import"
   ],
   "settings": {
     "import/parser": "babel-eslint",
     "import/resolve": {
-      "moduleDirectory": ["node_modules", "src"]
+      "moduleDirectory": [
+        "node_modules",
+        "src"
+      ]
     }
   },
   "globals": {

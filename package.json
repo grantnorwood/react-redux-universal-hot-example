@@ -1,27 +1,18 @@
 {
-  "name": "react-redux-universal-hot-example",
-  "description": "Example of an isomorphic (universal) webapp using react redux and hot reloading",
-  "author": "Erik Rasmussen <rasmussenerik@gmail.com> (http://github.com/erikras)",
-  "license": "MIT",
-  "version": "0.9.0",
+  "name": "opus.ui.student",
+  "description": "The new v2 Student UI built using React.js.",
+  "author": "Education Partners",
+  "contributors": [
+    "Alex Oviedo <alex.oviedo@educationpartners.com>",
+    "Grant Norwood <grant.norwood@educationpartners.com>"
+  ],
+  "license": "UNLICENSED",
+  "version": "0.1.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/erikras/react-redux-universal-hot-example"
+    "url": "git@gitlab.com:educationpartners/opus.ui.student.git"
   },
-  "homepage": "https://github.com/erikras/react-redux-universal-hot-example",
-  "keywords": [
-    "react",
-    "isomorphic",
-    "universal",
-    "webpack",
-    "express",
-    "hot reloading",
-    "react-hot-reloader",
-    "redux",
-    "starter",
-    "boilerplate",
-    "babel"
-  ],
+  "homepage": "https://gitlab.com/educationpartners/opus.ui.student",
   "main": "bin/server.js",
   "scripts": {
     "start": "concurrent --kill-others \"npm run start-prod\" \"npm run start-prod-api\"",

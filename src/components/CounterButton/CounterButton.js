@@ -7,10 +7,17 @@ import {increment} from 'redux/modules/counter';
   {increment}
 )
 export default class CounterButton extends Component {
+
   static propTypes = {
     count: PropTypes.number,
     increment: PropTypes.func.isRequired,
     className: PropTypes.string
+  }
+
+  constructor(props) {
+    super(props);
+
+    this.props = props;
   }
 
   props = {
@@ -27,5 +34,6 @@ export default class CounterButton extends Component {
       </button>
     );
   }
+
 }
 
