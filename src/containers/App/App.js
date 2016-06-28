@@ -1,16 +1,24 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { IndexLink } from 'react-router';
-import { LinkContainer } from 'react-router-bootstrap';
-import Navbar from 'react-bootstrap/lib/Navbar';
-import Nav from 'react-bootstrap/lib/Nav';
-import NavItem from 'react-bootstrap/lib/NavItem';
+// import { IndexLink } from 'react-router';
 import Helmet from 'react-helmet';
 import { isLoaded as isInfoLoaded, load as loadInfo } from 'redux/modules/info';
 import { isLoaded as isAuthLoaded, load as loadAuth, logout } from 'redux/modules/auth';
 import { push } from 'react-router-redux';
+import { RouteHandler } from 'react-router';
 import config from '../../config';
 import { asyncConnect } from 'redux-async-connect';
+import { AppBar, LeftNav } from 'material-ui';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+
+// Define menu items for LeftNav
+const menuItems = [
+  { route: '/', text: 'Home' },
+  { route: 'about', text: 'About' },
+  { route: 'contact', text: 'Contact' },
+];
 
 @asyncConnect([{
   promise: ({store: {dispatch, getState}}) => {
@@ -30,6 +38,7 @@ import { asyncConnect } from 'redux-async-connect';
   state => ({user: state.auth.user}),
   {logout, pushState: push})
 export default class App extends Component {
+
   static propTypes = {
     children: PropTypes.object.isRequired,
     user: PropTypes.object,
@@ -41,6 +50,24 @@ export default class App extends Component {
     store: PropTypes.object.isRequired
   };
 
+  static childContextTypes = {
+    muiTheme: React.PropTypes.object
+  };
+
+  static getChildContext() {
+    return {
+      muiTheme: getMuiTheme()
+    };
+  }
+
+  constructor() {
+    super();
+
+    this._handleClick = this._handleClick.bind(this);
+    this._getSelectedIndex = this._getSelectedIndex.bind(this);
+    this._onLeftNavChange = this._onLeftNavChange.bind(this);
+  }
+
   componentWillReceiveProps(nextProps) {
     if (!this.props.user && nextProps.user) {
       // login
@@ -51,71 +78,64 @@ export default class App extends Component {
     }
   }
 
-  handleLogout = (event) => {
-    event.preventDefault();
-    this.props.logout();
-  };
+  // handleLogout = (event) => {
+  //   event.preventDefault();
+  //   this.props.logout();
+  // };
+
+  _handleClick(e) {
+    e.preventDefault();
+
+    this.refs.leftNav.toggle();
+  }
+
+  // Get the selected item in LeftMenu
+  _getSelectedIndex() {
+    // Just return 0 for now, the for loop below isn't working yet.
+    return 0;
+
+    // let currentItem;
+    //
+    // for (let i = menuItems.length - 1; i >= 0; i--) {
+    //   currentItem = menuItems[i];
+    //   if (currentItem.route && this.context.router.isActive(currentItem.route)) {
+    //     return i;
+    //   }
+    // }
+  }
+
+  _onLeftNavChange(e, key, payload) {
+    // Do DOM Diff refresh
+    this.context.router.transitionTo(payload.route);
+  }
 
   render() {
-    const {user} = this.props;
+    // const {user} = this.props;
     const styles = require('./App.scss');
 
     return (
-      <div className={styles.app}>
-        <Helmet {...config.app.head}/>
-        <Navbar fixedTop>
-          <Navbar.Header>
-            <Navbar.Brand>
-              <IndexLink to="/" activeStyle={{color: '#33e0ff'}}>
-                <div className={styles.brand}/>
-                <span>{config.app.title}</span>
-              </IndexLink>
-            </Navbar.Brand>
-            <Navbar.Toggle/>
-          </Navbar.Header>
+      <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
+        <div className={styles.app}>
+          <Helmet {...config.app.head}/>
 
-          <Navbar.Collapse eventKey={0}>
-            <Nav navbar>
-              {user && <LinkContainer to="/chat">
-                <NavItem eventKey={1}>Chat</NavItem>
-              </LinkContainer>}
+          <LeftNav
+            ref="leftNav"
+            docked={false}
+            menuItems={menuItems}
+            selectedIndex={this._getSelectedIndex()}
+            onChange={this._onLeftNavChange} />
 
-              <LinkContainer to="/widgets">
-                <NavItem eventKey={2}>Widgets</NavItem>
-              </LinkContainer>
-              <LinkContainer to="/survey">
-                <NavItem eventKey={3}>Survey</NavItem>
-              </LinkContainer>
-              <LinkContainer to="/about">
-                <NavItem eventKey={4}>About Us</NavItem>
-              </LinkContainer>
+          <header>
+            <AppBar title="MUI Routing" onLeftIconButtonTouchTap={this._handleClick} />
+          </header>
 
-              {!user &&
-              <LinkContainer to="/login">
-                <NavItem eventKey={5}>Login</NavItem>
-              </LinkContainer>}
-              {user &&
-              <LinkContainer to="/logout">
-                <NavItem eventKey={6} className="logout-link" onClick={this.handleLogout}>
-                  Logout
-                </NavItem>
-              </LinkContainer>}
-            </Nav>
-            {user &&
-            <p className={styles.loggedInMessage + ' navbar-text'}>Logged in as <strong>{user.name}</strong>.</p>}
-            <Nav navbar pullRight>
-              <NavItem eventKey={1} target="_blank" title="View on Github" href="https://github.com/erikras/react-redux-universal-hot-example">
-                <i className="fa fa-github"/>
-              </NavItem>
-            </Nav>
-          </Navbar.Collapse>
-        </Navbar>
+          <section className={styles.appContent}>
+            <RouteHandler />
+          </section>
 
-        <div className={styles.appContent}>
-          {this.props.children}
         </div>
-
-      </div>
+      </MuiThemeProvider>
     );
   }
+
 }
