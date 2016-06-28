@@ -1,5 +1,19 @@
 /* -----------------------------------------------------------------
  * Main.css is the entry point to the base "ep" theme,
  * which is then extended upon by the school's custom theme.
+ *
+ * TODO: Split this file out into appropriately separate files.
  * ----------------------------------------------------------------- */
 
+/* Colors */
+$cyan:            cyan;
+$humility:        lightgray;
+
+
+
+
+/* Default elements */
+html, body {
+  margin: 0;
+  padding: 0;
+}

@@ -12,7 +12,13 @@ import { Router, applyRouterMiddleware, browserHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 import { ReduxAsyncConnect } from 'redux-async-connect';
 import useScroll from 'react-router-scroll';
+import injectTapEventPlugin from 'react-tap-event-plugin';
 
+// Needed for onTouchTap
+// http://stackoverflow.com/a/34015469/988941
+injectTapEventPlugin();
+
+// Get routes from routes.
 import getRoutes from './routes';
 
 const client = new ApiClient();
